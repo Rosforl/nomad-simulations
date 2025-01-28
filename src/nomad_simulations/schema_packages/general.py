@@ -11,7 +11,7 @@ from nomad.config import config
 from nomad.datamodel.data import Schema
 from nomad.datamodel.metainfo.annotations import ELNAnnotation
 from nomad.datamodel.metainfo.basesections import Activity, Entity
-from nomad.metainfo import Datetime, Quantity, SchemaPackage, Section, SubSection
+from nomad.metainfo import Quantity, SchemaPackage, Section, SubSection
 
 from nomad_simulations.schema_packages.model_method import ModelMethod
 from nomad_simulations.schema_packages.model_system import ModelSystem
@@ -20,6 +20,8 @@ from nomad_simulations.schema_packages.utils import (
     get_composition,
     is_not_representative,
 )
+
+from .common import Time
 
 configuration = config.get_plugin_entry_point(
     'nomad_simulations.schema_packages:nomad_simulations_plugin'
@@ -121,7 +123,7 @@ class Program(Entity):
         pass
 
 
-class BaseSimulation(Activity):
+class BaseSimulation(Activity, Time):
     """
     A computational simulation that produces output data from a given input model system
     and input methodological parameters.
@@ -133,50 +135,6 @@ class BaseSimulation(Activity):
 
     m_def = Section(
         links=['https://liusemweb.github.io/mdo/core/1.1/index.html#Calculation']
-    )
-
-    datetime_end = Quantity(
-        type=Datetime,
-        description="""
-        The date and time when this computation ended.
-        """,
-        a_eln=ELNAnnotation(component='DateTimeEditQuantity'),
-    )
-
-    cpu1_start = Quantity(
-        type=np.float64,
-        unit='second',
-        description="""
-        The starting time of the computation on the (first) CPU 1.
-        """,
-        a_eln=ELNAnnotation(component='NumberEditQuantity'),
-    )
-
-    cpu1_end = Quantity(
-        type=np.float64,
-        unit='second',
-        description="""
-        The end time of the computation on the (first) CPU 1.
-        """,
-        a_eln=ELNAnnotation(component='NumberEditQuantity'),
-    )
-
-    wall_start = Quantity(
-        type=np.float64,
-        unit='second',
-        description="""
-        The internal wall-clock time from the starting of the computation.
-        """,
-        a_eln=ELNAnnotation(component='NumberEditQuantity'),
-    )
-
-    wall_end = Quantity(
-        type=np.float64,
-        unit='second',
-        description="""
-        The internal wall-clock time from the end of the computation.
-        """,
-        a_eln=ELNAnnotation(component='NumberEditQuantity'),
     )
 
     program = SubSection(sub_section=Program.m_def, repeats=False)

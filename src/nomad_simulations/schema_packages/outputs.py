@@ -1,7 +1,6 @@
 from typing import TYPE_CHECKING, Optional
 
 import numpy as np
-from nomad.datamodel.data import ArchiveSection
 from nomad.datamodel.metainfo.annotations import ELNAnnotation
 from nomad.metainfo import Quantity, SubSection
 
@@ -38,8 +37,10 @@ from nomad_simulations.schema_packages.properties import (
     XASSpectrum,
 )
 
+from .common import Time
 
-class Outputs(ArchiveSection):
+
+class Outputs(Time):
     """
     Output properties of a simulation. This base class can be used for inheritance in any of the output properties
     defined in this schema.
