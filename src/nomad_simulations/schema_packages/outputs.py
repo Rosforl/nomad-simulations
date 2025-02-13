@@ -66,6 +66,8 @@ class Outputs(ArchiveSection):
         """,
     )
 
+
+class ElectronicStructureOutputs(Outputs):
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
     # List of properties
     # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
